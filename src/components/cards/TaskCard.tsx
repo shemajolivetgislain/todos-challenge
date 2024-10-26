@@ -81,14 +81,16 @@ const TaskCard: React.FC<TaskCardProps> = ({
             {title}
           </h1>
           <div className="relative">
-            <HiOutlineDotsVertical
-              size={20}
-              className=" dark:text-darkTheme-textColor cursor-pointer"
+            <button
               onClick={() => {
                 toggleAction();
                 onClick();
               }}
-            />
+              aria-label="dots icon"
+              className="dark:text-darkTheme-textColor cursor-pointer"
+            >
+              <HiOutlineDotsVertical size={20} />
+            </button>
             {openAction && (
               <span className="absolute top-8 right-0 flex flex-col gap-2 rounded-md shadow-sm shadow-sky-200 py-4 px-4 bg-whiteTheme-backgroundColor dark:bg-darkTheme-secondColor dark:border-darkTheme-borderColor dark:shadow-darkTheme-secondColor z-10">
                 <div

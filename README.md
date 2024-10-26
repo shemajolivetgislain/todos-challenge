@@ -47,6 +47,28 @@ To run this project locally, you'll need to have Node.js and npm installed on yo
 
   to build the app.
 
+  3. **Configure Enviromnent Variable**
+
+   You can do:
+
+   ```bash
+   touch .env
+
+  ```
+
+  Add to .env file backend url VITE_APP_LOCAL_API_URL = "https://dummyjson.com".
+
+  4. **To Run Test**
+
+   You can do:
+
+   ```bash
+   npm run test
+
+  ```
+
+  to run the test.
+
 ### License
 
 - Distributed under the [MIT License](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt).
