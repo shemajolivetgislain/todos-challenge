@@ -9,7 +9,7 @@
   "ToDoTasks": "To Do",
   "AddTaskButton": "Add task",
   "EditTaskButton": "Edit task",
-  "AddNewtaskTitle": "Ajouter une nouvelle tâche",
+  "AddNewtaskTitle": "Add New Task",
   "AddTaskPlaceholder": "Add new task",
   "EditTask": "Edit Task",
   "DeleteTask": "Delete Task",
@@ -22,7 +22,7 @@
     "Creative": "Creative",
     "creativeWebsite": "Creative Website",
     "limitedAccess": "Limited Access",
-    "fromDate": "Depuis le 23 avril",
+    "fromDate": "From 23 April",
     "updateAt": "Updated 12 min ago",
     "websiteDesign": "Website Design"
   },

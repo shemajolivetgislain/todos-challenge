@@ -60,7 +60,7 @@ export const EditTask: React.FC<AddTaskProps> = ({ closeModal }) => {
   }, [isUpdatingSuccess, isEdtingError, closeModal]);
 
   return (
-    <Modal title={t("EdITaskTitle")} onClose={closeModal}>
+    <Modal title={t("EditTask")} onClose={closeModal}>
       <form
         onSubmit={handleSubmit(onEditTodo)}
         className="flex flex-col gap-5 mt-6"

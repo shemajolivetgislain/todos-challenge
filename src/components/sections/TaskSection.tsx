@@ -3,6 +3,10 @@ import { setSingleTodo } from "../../app/features/todoSlice";
 import TaskCard from "../cards/TaskCard";
 import { useTranslation } from "react-i18next";
 
+import ImageOne from "../../assets/images/1.jpg";
+import ImageTwo from "../../assets/images/2.jpg";
+import ImageThree from "../../assets/images/3.jpg";
+
 interface Todo {
   id: number;
   todo: string;
@@ -16,6 +20,8 @@ interface TaskSectionProps {
 const TaskSection: React.FC<TaskSectionProps> = ({ data }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const images = [ImageOne, ImageTwo, ImageThree];
 
   const handleClick = (todo: Todo) => {
     dispatch(setSingleTodo(todo));
@@ -37,6 +43,7 @@ const TaskSection: React.FC<TaskSectionProps> = ({ data }) => {
               }
               key={todo.id}
               onClick={() => handleClick(todo)}
+              image={images[index % images.length]} // Assign image based on index
             />
           ))
         ) : (
