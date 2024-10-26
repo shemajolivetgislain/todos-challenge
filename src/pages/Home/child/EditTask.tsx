@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "../../../components/Modal";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import Input from "../../../components/inputs";
 import Button from "../../../components/buttons";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTasks } from "../../../hooks/useTasks";
 import Select from "../../../components/inputs/Select";
+import { updateTodo } from "../../../app/features/todoSlice";
 
 // Define the type for the form data
 interface FormData {
@@ -23,6 +24,7 @@ export const EditTask: React.FC<EditTaskProps> = ({ closeModal }) => {
   const { t } = useTranslation();
   const { singleTodo } = useSelector((state: any) => state.todos);
   const { updateTaskMutation } = useTasks();
+  const dispatch = useDispatch();
 
   const {
     control,
@@ -37,7 +39,13 @@ export const EditTask: React.FC<EditTaskProps> = ({ closeModal }) => {
         data: { todo: data.todo, completed: data.completed },
       },
       {
-        onSuccess: () => {
+        onSuccess: (updatedTodo) => {
+          const updatedData = {
+            id: singleTodo?.id,
+            todo: data.todo,
+            completed: updatedTodo.completed,
+          };
+          dispatch(updateTodo(updatedData));
           toast.success("Todo updated successfully", {
             autoClose: 1000,
             hideProgressBar: true,

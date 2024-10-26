@@ -29,7 +29,8 @@ const AddNewTask: React.FC<AddTaskProps> = ({ closeModal }) => {
 
   const onSubmitTodo: SubmitHandler<FormData> = (data) => {
     createTaskMutation.mutate(
-      { todo: data.todo, completed: false },
+      { userId: 8, todo: data.todo, completed: false },
+
       {
         onSuccess: (newTodo) => {
           dispatch(addTodo(newTodo));

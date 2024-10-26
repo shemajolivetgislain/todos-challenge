@@ -23,7 +23,6 @@ const initialState: TodosState = {
   incompleteTodosSize: 0,
   completeTodosSize: 0,
 };
-
 const todosSlice = createSlice({
   name: "todos",
   initialState,
@@ -32,13 +31,24 @@ const todosSlice = createSlice({
       state.todos = action.payload;
     },
     addTodo: (state, action: PayloadAction<Todo>) => {
-      state.todos = [action.payload, ...state.todos];
+      state.todos.unshift(action.payload);
       state.allTodosSize += 1;
-      if (!action.payload.completed) {
-        state.incompleteTodosSize += 1;
-      } else {
+      if (action.payload.completed) {
         state.completeTodosSize += 1;
+      } else {
+        state.incompleteTodosSize += 1;
       }
+    },
+    updateTodo: (state, action: PayloadAction<Todo>) => {
+      const index = state.todos.findIndex(
+        (todo) => todo.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.todos[index] = action.payload;
+      }
+    },
+    deleteTodo: (state, action: PayloadAction<number>) => {
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
     setSingleTodo: (state, action: PayloadAction<Todo>) => {
       state.singleTodo = action.payload;
@@ -57,8 +67,10 @@ const todosSlice = createSlice({
 
 export const {
   setTodos,
-  addTodo, 
+  addTodo,
+  updateTodo,
   setSingleTodo,
+  deleteTodo,
   setAllTodos,
   setCompleteTodos,
   setImcompleteTodos,

@@ -2,8 +2,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { useState } from "react";
 import { BiMessageSquareEdit } from "react-icons/bi";
 import { MdOutlineDeleteSweep } from "react-icons/md";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { AiOutlineMessage } from "react-icons/ai";
@@ -12,6 +11,7 @@ import PicThree from "../../assets/pics/picThree.jpg";
 import PicFour from "../../assets/pics/picFour.jpg";
 import { EditTask } from "../../pages/Home/child/EditTask";
 import { useTasks } from "../../hooks/useTasks";
+import { deleteTodo } from "../../app/features/todoSlice";
 
 interface TaskCardProps {
   title: string;
@@ -35,15 +35,14 @@ const TaskCard: React.FC<TaskCardProps> = ({
   const { singleTodo } = useSelector((state: any) => state.todos);
   const { t } = useTranslation();
   const { deleteTaskMutation } = useTasks();
-
-  console.log("*************", singleTodo?.id);
-
+  const dispatch = useDispatch();
   const toggleAction = () => setOpenAction(!openAction);
 
   const handleDelete = () => {
     if (singleTodo) {
       deleteTaskMutation.mutate(singleTodo.id, {
         onSuccess: () => {
+          dispatch(deleteTodo(singleTodo.id));
           toast.success("Todo deleted successfully", {
             autoClose: 2000,
             hideProgressBar: true,

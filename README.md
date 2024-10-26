@@ -19,7 +19,7 @@ To run this project locally, you'll need to have Node.js and npm installed on yo
 
    ```bash
    git clone https://github.com/shemajolivetgislain/todos-challenge.git
-   cd todos-app
+   cd todos-app-challenge
    npm install
 
    ```
