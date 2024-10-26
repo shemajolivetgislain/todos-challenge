@@ -23,7 +23,7 @@ const TaskSection: React.FC<TaskSectionProps> = ({ data }) => {
 
   return (
     <section className="w-full mb-8">
-      <main className="grid grid-cols-4 items-center gap-8 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
+      <main className="grid grid-cols-4 items-center gap-8 max-lg:grid-cols-2 max-md:grid-cols-2 max-sm:grid-cols-1">
         {data?.length > 0 ? (
           data.map((todo, index) => (
             <TaskCard

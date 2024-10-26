@@ -11,6 +11,8 @@ import { AiOutlineMessage } from "react-icons/ai";
 import PicTwo from "../../assets/pics/picTwo.jpg";
 import PicThree from "../../assets/pics/picThree.jpg";
 import PicFour from "../../assets/pics/picFour.jpg";
+import { EditTask } from "../../pages/Home/child/EditTask";
+
 // import { RootState } from "../../app/store"; // Assuming RootState type is defined in store
 // import { Todo } from "../../types"; // Assuming a Todo type is defined in types file
 
@@ -83,7 +85,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
   return (
     <>
-      <div className="flex flex-col gap-3 rounded-md shadow-sm shadow-sky-100 border-2 py-10 px-6 h-72 bg-whiteTheme-backgroundColor dark:bg-darkTheme-primaryColor dark:border-darkTheme-borderColor dark:shadow-darkTheme-secondColor">
+      <div className="flex flex-col gap-3 rounded-md shadow-sm shadow-sky-100 border py-10 px-6 h-72 bg-whiteTheme-backgroundColor dark:bg-darkTheme-primaryColor dark:border-darkTheme-borderColor dark:shadow-darkTheme-secondColor">
         <header className="flex items-center justify-between w-full">
           <h1 className={`${className} p-2 font-medium text-sm rounded-md`}>
             {title}
@@ -101,7 +103,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
           <h1 className="text-whiteTheme-primaryColor font-semibold text-xl">
             {t("taskCardTitle")} <span>{taskNumber}</span>
           </h1>
-       
+
           <p className="text-whiteTheme-accentColor font-normal text-sm dark:text-darkTheme-textColor">
             {detail}
           </p>
@@ -160,8 +162,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
           </span>
         )}
       </div>
-      {openEditModal &&
-        " <EditTaskModal closeModal={() => setOpenEditModal(false)} />"}
+      {openEditModal && <EditTask closeModal={() => setOpenEditModal(false)} />}
     </>
   );
 };

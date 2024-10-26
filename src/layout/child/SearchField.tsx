@@ -6,7 +6,7 @@ const SearchField: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="w-[30%] max-md:w-[35%] max-sm:w-[60%]">
+    <div className="w-[30%] max-md:w-[35%] max-sm:hidden max-sm:w-[60%]">
       <div className="relative">
         <Input
           className={`!border-none !bg-whiteTheme-lightAccent !py-2 dark:!bg-darkTheme-borderColor`}

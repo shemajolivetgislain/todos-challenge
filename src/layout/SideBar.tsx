@@ -50,7 +50,7 @@ const SideBar: FC = () => {
           <span
             className="border rounded-full flex 
           items-center justify-center p-2 cursor-pointer w-8 h-8
-          hover:bg-purple-50 hover:text-whiteTheme-primaryColor"
+          hover:bg-purple-50 hover:text-whiteTheme-primaryColor dark:text-darkTheme-textColor dark:hover:bg-darkTheme-backgroundColor"
           >
             <IoMdAdd size={15} />
           </span>

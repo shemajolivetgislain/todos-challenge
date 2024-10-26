@@ -15,6 +15,17 @@
   "DeleteTask": "Delete Task",
   "Cancel": "Cancel",
   "eDITaskTitle": "Edit task",
-  "Edit":"Edit",
-  "Delete":"Delete"
+  "Edit": "Edit",
+  "Delete": "Delete",
+  "homeHeader": {
+    "workspace": "Workspaces",
+    "Creative": "Creative",
+    "creativeWebsite": "Creative Website",
+    "limitedAccess": "Limited Access",
+    "fromDate": "Depuis le 23 avril",
+    "updateAt": "Updated 12 min ago",
+    "websiteDesign": "Website Design"
+  },
+
+  "filterAndSort": "Filter & Sort"
 }

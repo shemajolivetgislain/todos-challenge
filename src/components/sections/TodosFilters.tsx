@@ -13,6 +13,8 @@ import {
 } from "../../app/features/todoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import AddNewTask from "../../pages/Home/child/AddNewTask";
+import { CgArrowsExchangeAlt } from "react-icons/cg";
 
 interface Tab {
   path: string;
@@ -80,14 +82,14 @@ const TodosFilters = () => {
 
   return (
     <section className="w-full flex flex-col gap-4">
-      <div className="w-full h-20 rounded-md bg-whiteTheme-backgroundColor shadow-sm shadow-purple-100 px-7 max-sm:px-3 flex justify-between items-center dark:bg-darkTheme-primaryColor dark:shadow-darkTheme-borderColor ">
+      <div className="w-full h-20 max-md:h-full rounded-md bg-whiteTheme-backgroundColor shadow-sm shadow-purple-100 px-7 max-md:pb-5 max-sm:px-3 flex max-md:gap-5 justify-between items-center max-md:flex-col dark:bg-darkTheme-primaryColor dark:shadow-darkTheme-borderColor ">
         <ul className=" flex items-center gap-9 pt-3 max-md:gap-4 max-sm:gap-2">
           {todosPathLink.links.map((tab: Tab, index: number) => (
             <li
               key={index}
-              className={`${
+              className={` text-sm ${
                 tab.path === activeTab &&
-                "border-b-[5px] border-whiteTheme-primaryColor text-whiteTheme-primaryColor font-semibold"
+                "border-b-[5px] border-whiteTheme-primaryColor text-whiteTheme-primaryColor font-semibold "
               } py-5 cursor-pointer text-whiteTheme-accentColor max-sm:text-sm`}
               onClick={() => handleTabClick(tab)}
             >
@@ -98,18 +100,32 @@ const TodosFilters = () => {
             </li>
           ))}
         </ul>
-        <Button
-          className={
-            "!border-[1px] !border-whiteTheme-accentColor !bg-white !text-whiteTheme-accentColor hover:!bg-whiteTheme-primaryColor hover:!text-whiteTheme-secondColor dark:!bg-darkTheme-secondColor dark:!text-darkTheme-textColor dark:hover:!bg-darkTheme-primaryColor dark:hover:!text-darkTheme-accentColor max-md:!px-2 max-sm:hidden"
-          }
-          label={
-            <span className="flex gap-2 items-center">
-              <IoMdAdd />
-              <p className="max-md:hidden"> {t("taskAddTitle")}</p>
-            </span>
-          }
-          onClick={() => setShowModal(true)}
-        />
+        <div className="flex items-center gap-2">
+          {" "}
+          <Button
+            className={
+              "!border-[1px] !border-whiteTheme-accentColor !bg-white !text-whiteTheme-accentColor hover:!bg-whiteTheme-primaryColor hover:!text-whiteTheme-secondColor dark:!bg-darkTheme-secondColor dark:!text-darkTheme-textColor dark:hover:!bg-darkTheme-primaryColor dark:hover:!text-darkTheme-accentColor max-md:!px-2 max-sm:hidden"
+            }
+            label={
+              <span className="flex gap-2 items-center">
+                <CgArrowsExchangeAlt size={25} />
+                <p className="max-sm:hidden"> {t("filterAndSort")}</p>
+              </span>
+            }
+          />
+          <Button
+            className={
+              "!border-[1px] !border-whiteTheme-accentColor !bg-white !text-whiteTheme-accentColor hover:!bg-whiteTheme-primaryColor hover:!text-whiteTheme-secondColor dark:!bg-darkTheme-secondColor dark:!text-darkTheme-textColor dark:hover:!bg-darkTheme-primaryColor dark:hover:!text-darkTheme-accentColor max-md:!px-2"
+            }
+            label={
+              <span className="flex gap-2 items-center">
+                <IoMdAdd />
+                <p className="max-SM:hidden"> {t("taskAddTitle")}</p>
+              </span>
+            }
+            onClick={() => setShowModal(true)}
+          />
+        </div>
       </div>
       {isTodosLoading ? (
         <span>
@@ -122,8 +138,7 @@ const TodosFilters = () => {
           <p>Failed to load todos</p>
         </span>
       )}
-      {showModal &&
-        "<AddNewTaskModal closeModal={() => setShowModal(false)} />"}
+      {showModal && <AddNewTask closeModal={() => setShowModal(false)} />}
     </section>
   );
 };
