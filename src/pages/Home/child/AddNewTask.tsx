@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Modal from "../../../components/Modal";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import Input from "../../../components/inputs";
 import Button from "../../../components/buttons";
-import { useCreateTodoMutation } from "../../../app/api";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
-
+import { addTodo } from "../../../app/features/todoSlice";
+import { useDispatch } from "react-redux";
+import { useTasks } from "../../../hooks/useTasks";
 interface AddTaskProps {
   closeModal: () => void;
 }
 
-// Define the type for the form data
 interface FormData {
   todo: string;
 }
@@ -23,47 +23,33 @@ const AddNewTask: React.FC<AddTaskProps> = ({ closeModal }) => {
     formState: { errors },
   } = useForm<FormData>();
   const { t } = useTranslation();
+  const { createTaskMutation } = useTasks();
 
-  const [
-    createTodo,
-    {
-      isLoading: isCreatingTodoLoading,
-      isSuccess: isCreatingTodoSuccess,
-      isError: isCreatingTodoError,
-      data: createTodoData,
-    },
-  ] = useCreateTodoMutation();
+  const dispatch = useDispatch();
 
-  // Define the onSubmit handler with the appropriate type
   const onSubmitTodo: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-    createTodo({ todo: data.todo, completed: false, userId: 5 });
+    createTaskMutation.mutate(
+      { todo: data.todo, completed: false },
+      {
+        onSuccess: (newTodo) => {
+          dispatch(addTodo(newTodo));
+          toast.success(`Todo ${newTodo.todo} added successfully`, {
+            autoClose: 1000,
+            hideProgressBar: true,
+            position: "top-center",
+          });
+          closeModal();
+        },
+        onError: () => {
+          toast.error("Something went wrong", {
+            autoClose: 1000,
+            hideProgressBar: true,
+            position: "top-center",
+          });
+        },
+      }
+    );
   };
-
-  // Handle success and error
-  useEffect(() => {
-    if (isCreatingTodoSuccess) {
-      toast.success(`Todo ${createTodoData?.todo} added successfully`, {
-        autoClose: 1000,
-        hideProgressBar: true,
-        position: "top-center",
-      });
-      closeModal();
-    }
-    if (isCreatingTodoError) {
-      toast.error("Something went wrong", {
-        autoClose: 1000,
-        hideProgressBar: true,
-        position: "top-center",
-      });
-      closeModal();
-    }
-  }, [
-    closeModal,
-    createTodoData?.todo,
-    isCreatingTodoError,
-    isCreatingTodoSuccess,
-  ]);
 
   return (
     <Modal title={t("AddNewtaskTitle")} onClose={closeModal}>
@@ -94,12 +80,14 @@ const AddNewTask: React.FC<AddTaskProps> = ({ closeModal }) => {
           <Button
             type="submit"
             className="!py-1.5 !text-lg max-md:!text-sm "
-            label={isCreatingTodoLoading ? "Adding ..." : t("AddTaskButton")}
+            label={
+              createTaskMutation.isPending ? "Adding ..." : t("AddTaskButton")
+            }
           />
           <Button
-            className="!bg-white !border-2 !border-red-700 !text-red-700 !py-1 !text-lg hover:!bg-red-700 hover:!text-whiteTheme-secondColor dark:!bg-red-900 dark:!text-darkTheme-textColor "
+            className="!bg-white !border-2 !border-red-700 !text-red-700 !py-1 !text-lg max-md:!text-sm hover:!bg-red-700 hover:!text-whiteTheme-secondColor dark:!bg-red-900 dark:!text-darkTheme-textColor "
             onClick={closeModal}
-            label={<span className="text-red-700 text-sm">{t("Cancel")}</span>}
+            label={<span className="text-red-700 ">{t("Cancel")}</span>}
           />
         </div>
       </form>

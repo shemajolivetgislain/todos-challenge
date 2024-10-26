@@ -31,7 +31,7 @@ const TaskSection: React.FC<TaskSectionProps> = ({ data }) => {
     <section className="w-full mb-8">
       <main className="grid grid-cols-4 items-center gap-8 max-lg:grid-cols-2 max-md:grid-cols-2 max-sm:grid-cols-1">
         {data?.length > 0 ? (
-          data.map((todo, index) => (
+          data?.map((todo, index) => (
             <TaskCard
               title={todo.completed ? t("CompletedTasks") : t("ToDoTasks")}
               taskNumber={index + 1}
@@ -43,7 +43,7 @@ const TaskSection: React.FC<TaskSectionProps> = ({ data }) => {
               }
               key={todo.id}
               onClick={() => handleClick(todo)}
-              image={images[index % images.length]} // Assign image based on index
+              image={images[index % images.length]}
             />
           ))
         ) : (

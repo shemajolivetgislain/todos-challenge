@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import AddNewTask from "../../pages/Home/child/AddNewTask";
 import { CgArrowsExchangeAlt } from "react-icons/cg";
+import { SpinnerLoader } from "../loaders/SpinnerLoader";
 
 interface Tab {
   path: string;
@@ -79,7 +80,7 @@ const TodosFilters = () => {
       }
     }
   };
-
+  console.log("Todos data stored in globa state",todos);
   return (
     <section className="w-full flex flex-col gap-4">
       <div className="w-full h-20 max-md:h-full rounded-md bg-whiteTheme-backgroundColor shadow-sm shadow-purple-100 px-7 max-md:pb-5 max-sm:px-3 flex max-md:gap-5 justify-between items-center max-md:flex-col dark:bg-darkTheme-primaryColor dark:shadow-darkTheme-borderColor ">
@@ -128,9 +129,9 @@ const TodosFilters = () => {
         </div>
       </div>
       {isTodosLoading ? (
-        <span>
-          <p>Loading .....</p>
-        </span>
+        <div className="w-full flex justify-center items-center mt-20">
+          <SpinnerLoader />
+        </div>
       ) : isTodosSuccess ? (
         <TaskSection data={todos} />
       ) : (

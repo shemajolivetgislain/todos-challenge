@@ -1,9 +1,9 @@
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BiMessageSquareEdit } from "react-icons/bi";
 import { MdOutlineDeleteSweep } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useDeleteTodoMutation, useLazyGetAllToDosQuery } from "../../app/api";
+
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { AiOutlineMessage } from "react-icons/ai";
@@ -11,6 +11,7 @@ import PicTwo from "../../assets/pics/picTwo.jpg";
 import PicThree from "../../assets/pics/picThree.jpg";
 import PicFour from "../../assets/pics/picFour.jpg";
 import { EditTask } from "../../pages/Home/child/EditTask";
+import { useTasks } from "../../hooks/useTasks";
 
 interface TaskCardProps {
   title: string;
@@ -33,24 +34,31 @@ const TaskCard: React.FC<TaskCardProps> = ({
   const [openEditModal, setOpenEditModal] = useState(false);
   const { singleTodo } = useSelector((state: any) => state.todos);
   const { t } = useTranslation();
+  const { deleteTaskMutation } = useTasks();
+
+  console.log("*************", singleTodo?.id);
 
   const toggleAction = () => setOpenAction(!openAction);
 
-  const [getAllToDos] = useLazyGetAllToDosQuery();
-
-  const [
-    deleteTodo,
-    {
-      isLoading: isDeleteLoading,
-      isSuccess: isDeleteSuccess,
-      isError: isDeleteError,
-      error: deleteError,
-    },
-  ] = useDeleteTodoMutation();
-
   const handleDelete = () => {
     if (singleTodo) {
-      deleteTodo({ id: singleTodo.id });
+      deleteTaskMutation.mutate(singleTodo.id, {
+        onSuccess: () => {
+          toast.success("Todo deleted successfully", {
+            autoClose: 2000,
+            hideProgressBar: true,
+            position: "top-center",
+          });
+          setOpenAction(false);
+        },
+        onError: () => {
+          toast.error("Error deleting todo", {
+            autoClose: 2000,
+            hideProgressBar: true,
+            position: "top-center",
+          });
+        },
+      });
     }
   };
 
@@ -58,25 +66,6 @@ const TaskCard: React.FC<TaskCardProps> = ({
     setOpenEditModal(true);
     setOpenAction(false);
   };
-
-  useEffect(() => {
-    if (isDeleteSuccess) {
-      toast.success("Todo deleted successfully", {
-        autoClose: 2000,
-        hideProgressBar: true,
-        position: "top-center",
-      });
-      getAllToDos(undefined);
-      setOpenAction(false);
-    } else if (isDeleteError) {
-      toast.error("Error deleting todo", {
-        autoClose: 2000,
-        hideProgressBar: true,
-        position: "top-center",
-      });
-      setOpenAction(false);
-    }
-  }, [isDeleteSuccess, isDeleteError, deleteError, getAllToDos]);
 
   return (
     <>
@@ -87,7 +76,9 @@ const TaskCard: React.FC<TaskCardProps> = ({
           className="w-full h-52 object-cover rounded-md"
         />
         <header className="flex items-center justify-between w-full">
-          <h1 className={`${className} p-2 font-medium text-sm rounded-md capitalize`}>
+          <h1
+            className={`${className} p-2 font-medium text-sm rounded-md capitalize`}
+          >
             {title}
           </h1>
           <div className="relative">
@@ -100,7 +91,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
               }}
             />
             {openAction && (
-              <span className="absolute top-8 right-0 flex flex-col gap-2 rounded-md shadow-sm shadow-sky-200 py-4 px-6 bg-whiteTheme-backgroundColor dark:bg-darkTheme-secondColor dark:border-darkTheme-borderColor dark:shadow-darkTheme-secondColor z-10">
+              <span className="absolute top-8 right-0 flex flex-col gap-2 rounded-md shadow-sm shadow-sky-200 py-4 px-4 bg-whiteTheme-backgroundColor dark:bg-darkTheme-secondColor dark:border-darkTheme-borderColor dark:shadow-darkTheme-secondColor z-10">
                 <div
                   className="flex items-center gap-3 cursor-pointer"
                   onClick={handleEdit}
@@ -109,7 +100,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
                     size={20}
                     className="text-whiteTheme-primaryColor dark:text-purple-100"
                   />
-                  <p className="text-whiteTheme-primaryColor dark:text-purple-100">
+                  <p className="text-whiteTheme-primaryColor text-sm dark:text-purple-100">
                     {t("Edit")}
                   </p>
                 </div>
@@ -122,8 +113,10 @@ const TaskCard: React.FC<TaskCardProps> = ({
                     size={20}
                     className="text-red-700 dark:text-red-200"
                   />
-                  <p className="text-red-700 dark:text-red-200">
-                    {isDeleteLoading ? "Deleting ..." : t("Delete")}
+                  <p className="text-red-700 text-sm dark:text-red-200">
+                    {deleteTaskMutation.isPending
+                      ? "Deleting ..."
+                      : t("Delete")}
                   </p>
                 </div>
               </span>

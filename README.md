@@ -56,9 +56,10 @@ To run this project locally, you'll need to have Node.js and npm installed on yo
 Tools used to build the projects: 
 
 - Vite React
-- JavaScript
+- TypeScript
 - Tailwind
 - Redux toolkit /React redux
+- Tan Stack
 - React toastify
 - i18next
 - Jest & React Testing Library
