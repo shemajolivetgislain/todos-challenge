@@ -1,12 +1,12 @@
 import { forwardRef, ChangeEvent, InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  type?: string;
+  type?: "text" | "email" | "password";
   className?: string;
-  defaultValue?: string;
   placeholder?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
+  id?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -14,10 +14,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     {
       type = "text",
       className = "",
-      defaultValue,
       placeholder,
       onChange,
       required = false,
+      id,
       ...rest
     },
     ref
@@ -28,8 +28,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         type={type}
         required={required}
         placeholder={placeholder}
-        defaultValue={defaultValue}
         onChange={onChange}
+        id={id} // Apply id
         className={`${className} border-[1px] border-whiteTheme-primaryColor rounded-md p-3 w-full focus:outline-none focus:border-2 focus:border-whiteTheme-primaryColor transition-all duration-100 ease-out-in dark:bg-darkTheme-borderColor dark:text-darkTheme-textColor`}
         {...rest}
       />

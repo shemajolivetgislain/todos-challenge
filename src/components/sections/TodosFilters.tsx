@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import TodosLink from "../../constants/todosPath";
 import Button from "../buttons";
 import { IoMdAdd } from "react-icons/io";
-// import AddNewTaskModal from "../../pages/Home/AddNewTaskModal";
 import TaskSection from "./TaskSection";
-import { useLazyGetAllToDosQuery } from "../../app/api";
 import {
   setTodos,
   setAllTodos,
@@ -16,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import AddNewTask from "../../pages/Home/child/AddNewTask";
 import { CgArrowsExchangeAlt } from "react-icons/cg";
 import { SpinnerLoader } from "../loaders/SpinnerLoader";
+import { useTasks } from "../../hooks/useTasks";
 
 interface Tab {
   path: string;
@@ -33,47 +32,45 @@ const TodosFilters = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { todos } = useSelector((state: any) => state.todos);
 
-  const [
-    getAllToDos,
-    { isLoading: isTodosLoading, isSuccess: isTodosSuccess, data: todosData },
-  ] = useLazyGetAllToDosQuery();
-
-  useEffect(() => {
-    getAllToDos(undefined);
-  }, [getAllToDos]);
+  const { fetchTasks } = useTasks();
+  const {
+    data,
+    isPending: isTodosPending,
+    isFetched: isTodosFetched,
+  } = fetchTasks;
 
   // Saving data into global state
   useEffect(() => {
-    if (isTodosSuccess && todosData) {
-      dispatch(setTodos(todosData.todos));
-      dispatch(setAllTodos(todosData.todos.length));
+    if (!isTodosPending && isTodosFetched) {
+      dispatch(setTodos(data?.todos));
+      dispatch(setAllTodos(data?.todos?.length));
       dispatch(
         setCompleteTodos(
-          todosData.todos.filter((todo: any) => todo.completed === true).length
+          data.todos.filter((todo: any) => todo.completed === true).length
         )
       );
       dispatch(
         setImcompleteTodos(
-          todosData.todos.filter((todo: any) => todo.completed === false).length
+          data.todos.filter((todo: any) => todo.completed === false).length
         )
       );
     }
-  }, [isTodosSuccess, todosData, dispatch]);
+  }, [dispatch]);
 
   // Handling tab changes
   const handleTabClick = (tab: Tab) => {
     setActiveTab(tab.path);
-    if (todosData) {
+    if (data) {
       if (tab.path === "all") {
-        dispatch(setTodos(todosData.todos));
-        dispatch(setAllTodos(todosData.todos.length));
+        dispatch(setTodos(data?.todos));
+        dispatch(setAllTodos(data?.todos?.length));
       } else if (tab.path === "completed") {
-        const filtered = todosData.todos.filter(
+        const filtered = data.todos.filter(
           (todo: any) => todo.completed === true
         );
         dispatch(setTodos(filtered));
       } else if (tab.path === "todo") {
-        const filtered = todosData.todos.filter(
+        const filtered = data?.todos?.filter(
           (todo: any) => todo.completed === false
         );
         dispatch(setTodos(filtered));
@@ -127,11 +124,11 @@ const TodosFilters = () => {
           />
         </div>
       </div>
-      {isTodosLoading ? (
+      {isTodosPending ? (
         <div className="w-full flex justify-center items-center mt-20">
           <SpinnerLoader />
         </div>
-      ) : isTodosSuccess ? (
+      ) : isTodosFetched ? (
         <TaskSection data={todos} />
       ) : (
         <span>

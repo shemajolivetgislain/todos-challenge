@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { addTodo } from "../../../app/features/todoSlice";
 import { useDispatch } from "react-redux";
 import { useTasks } from "../../../hooks/useTasks";
+
 interface AddTaskProps {
   closeModal: () => void;
 }
@@ -21,16 +22,18 @@ const AddNewTask: React.FC<AddTaskProps> = ({ closeModal }) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: {
+      todo: "",
+    },
+  });
   const { t } = useTranslation();
   const { createTaskMutation } = useTasks();
-
   const dispatch = useDispatch();
 
   const onSubmitTodo: SubmitHandler<FormData> = (data) => {
     createTaskMutation.mutate(
       { userId: 8, todo: data.todo, completed: false },
-
       {
         onSuccess: (newTodo) => {
           dispatch(addTodo(newTodo));
@@ -68,6 +71,7 @@ const AddNewTask: React.FC<AddTaskProps> = ({ closeModal }) => {
                 {...field}
                 type="text"
                 placeholder={t("AddTaskPlaceholder")}
+                id="todo-input"
               />
               {errors.todo && (
                 <p className="text-red-600 text-[13px]">
@@ -80,15 +84,16 @@ const AddNewTask: React.FC<AddTaskProps> = ({ closeModal }) => {
         <div className="flex items-center gap-3">
           <Button
             type="submit"
-            className="!py-1.5 !text-lg max-md:!text-sm "
+            className="!py-1.5 !text-lg max-md:!text-sm"
             label={
               createTaskMutation.isPending ? "Adding ..." : t("AddTaskButton")
             }
+            disabled={createTaskMutation.isPending}
           />
           <Button
-            className="!bg-white !border-2 !border-red-700 !text-red-700 !py-1 !text-lg max-md:!text-sm hover:!bg-red-700 hover:!text-whiteTheme-secondColor dark:!bg-red-900 dark:!text-darkTheme-textColor "
+            className="!bg-white !border-2 !border-red-700 !text-red-700 !py-1 !text-lg max-md:!text-sm hover:!bg-red-700 hover:!text-whiteTheme-secondColor dark:!bg-red-900 dark:!text-darkTheme-textColor"
             onClick={closeModal}
-            label={<span className="text-red-700 ">{t("Cancel")}</span>}
+            label={<span className="text-red-700">{t("Cancel")}</span>}
           />
         </div>
       </form>
