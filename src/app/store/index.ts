@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "../api";
-// import todosSlice from "../features/todoSlice";
+import todosSlice from "../features/todoSlice";
 import todosActionsSlice from "../features/actionSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -11,13 +11,14 @@ const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
   todosActions: todosActionsSlice,
   translation: translationSlice,
+  todos: todosSlice,
 });
 
 // Configure persist
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["todosActions", "translation"],
+  whitelist: ["todosActions", "translation", "todos"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
