@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { navLinks } from "../constants/navLinks";
 import { useLocation } from "react-router-dom";
 import { FC } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const SideBar: FC = () => {
   const { pathname } = useLocation();
@@ -34,6 +35,26 @@ const SideBar: FC = () => {
             ))}
           </ul>
         </nav>
+
+        {/* Images */}
+        <div className="flex flex-col gap-2 pl-2">
+          {navLinks.imageSideBar.map((image, index) => (
+            <img
+              key={index}
+              src={image.name}
+              alt="image"
+              className="border border-whiteTheme-primaryColor/20 rounded-full h-8 w-8 object-cover  relative flex items-center justify-center gap-2.5 lg:my-1 duration-300 ease-in-out bg-white hover:bg-whiteTheme-primaryColor hover:text-whiteTheme-secondColor"
+            />
+          ))}
+
+          <span
+            className="border rounded-full flex 
+          items-center justify-center p-2 cursor-pointer w-8 h-8
+          hover:bg-purple-50 hover:text-whiteTheme-primaryColor"
+          >
+            <IoMdAdd size={15} />
+          </span>
+        </div>
         <footer className="py-7 border-t-2 border-purple-100">
           <ul className="flex flex-col gap-6">
             {navLinks.footerLinks.map((link, index) => (
