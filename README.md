@@ -1,6 +1,6 @@
 # TASK MANAGER APP
 
-Welcome to the [Task manager app (TMA)](https://todos-challenge.vercel.app/), This user-friendly platform offers comprehensive features for managing your tasks efficiently. With TMA, you can create, edit, and delete your to-dos effortlessly. Plus, it supports internalization, allowing you to use the app in either English or French according to your preference. Additionally, you can customize the app's theme to your liking, choosing between a light or dark mode for a personalized experience. Explore TMA now to streamline your task management process!
+Welcome to the [Task manager app (TMA)](https://todos-react-challenge.vercel.app/), This user-friendly platform offers comprehensive features for managing your tasks efficiently. With TMA, you can create, edit, and delete your to-dos effortlessly. Plus, it supports internalization, allowing you to use the app in either English or French according to your preference. Additionally, you can customize the app's theme to your liking, choosing between a light or dark mode for a personalized experience. Explore TMA now to streamline your task management process!
 
 
 ## Getting Started
