@@ -6,6 +6,11 @@ import PicOne from "../../../assets/pics/picOne.jpg";
 import PicTwo from "../../../assets/pics/picTwo.jpg";
 import PicThree from "../../../assets/pics/picThree.jpg";
 import PicFour from "../../../assets/pics/picFour.jpg";
+import { IoMdAdd } from "react-icons/io";
+import { BsLink45Deg } from "react-icons/bs";
+import { CgDatabase } from "react-icons/cg";
+import { RxDashboard } from "react-icons/rx";
+
 export const HomeHeader: React.FC = () => {
   return (
     <section className="w-full flex flex-col gap-4">
@@ -39,7 +44,7 @@ export const HomeHeader: React.FC = () => {
         </span>
       </div>
       {/* Row 2 */}
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 items-center justify-between">
         <div className="flex gap-2 items-center">
           <span className="flex gap-2 items-center">
             <MdLockOutline size={17} className="text-slate-500" />
@@ -74,6 +79,23 @@ export const HomeHeader: React.FC = () => {
             >
               +2
             </a>
+          </span>
+
+          <span className="bg-whiteTheme-primaryColor p-2 rounded-full w-8 h-8 text-center flex items-center">
+            <IoMdAdd size={20} className="text-white" />
+          </span>
+        </div>
+
+        <div className="flex gap-2 items-center">
+          <span className="bg-whiteTheme-greenAccent p-2 rounded-md text-center flex items-center">
+            <BsLink45Deg size={20} />
+          </span>
+          <span className="flex items-center gap-1 py-4 border-l-2 border-slate-400"></span>
+          <span className="bg-whiteTheme-primaryColor text-white p-2 rounded-md text-center flex items-center">
+            <CgDatabase size={20} />
+          </span>
+          <span className="bg-whiteTheme-greenAccent p-2 rounded-md text-center flex items-center">
+            <RxDashboard size={20} />
           </span>
         </div>
       </div>
