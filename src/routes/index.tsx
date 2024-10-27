@@ -1,11 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import DashboardLayout from "../layout";
+import NotFound from "../pages/NotFound";
+import HomePage from "../pages/Home";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<DashboardLayout />}>
-        <Route path="/" element={<h1>Home</h1>} />
+        <Route path="/" element={<HomePage/>} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
